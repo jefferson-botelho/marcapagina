@@ -8,10 +8,10 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class DataSourcesConfig {
+public class ConfiguracaoDeDataSources {
 
     @Bean
-    @ConfigurationProperties("app.conf.datasource.marcapagina")
+    @ConfigurationProperties(prefix = "spring.datasource")
     public DataSource dsMarcaPagina() {
         return DataSourceBuilder.create().build();
     }

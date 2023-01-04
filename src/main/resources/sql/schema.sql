@@ -1,3 +1,9 @@
+IF NOT EXISTS (SELECT * FROM sys.databases WHERE name = 'Keycloak')
+BEGIN
+  CREATE DATABASE Keycloak;
+END;
+GO
+
 CREATE SCHEMA MARCAPAGINA;
 GO
 

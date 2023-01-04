@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import javax.sql.DataSource;
 
 @Configuration
-public class RepositoriosConfig {
+public class ConfiguracaoDeRepositorios {
 
     @Bean
     public RepositorioUsuario repositorioUsuario(@Qualifier("dsMarcaPagina") DataSource dsMarcaPagina) {

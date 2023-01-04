@@ -1,19 +1,29 @@
 server:
   port: 8081
-  base-path: /marcapagina
-
-jwt:
-  secret: ${JWT_SECRET}
 
 spring:
   main:
     allow-circular-references: true
+  datasource:
+    driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
+    jdbc-url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;
+    username: SA
+    password: ${DB_SENHA_MARCAPAGINA}
+  security:
+    oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: login-app
+            authorization-grant-type: authorization_code
+            scope: openid
+        provider:
+          keycloak:
+            jwk-set-uri: ${app.conf.keycloak.auth}/realms/marca-pagina/protocol/openid-connect/certs
+            issuer-uri: ${app.conf.keycloak.auth}/realms/marca-pagina
+            user-name-attribute: preferred_username
 
 app:
   conf:
-    datasource:
-      marcapagina:
-        driver-class-name: com.microsoft.sqlserver.jdbc.SQLServerDriver
-        jdbc-url: jdbc:sqlserver://localhost:1433;encrypt=true;trustServerCertificate=true;
-        username: SA
-        password: ${DB_SENHA_MARCAPAGINA}
+    keycloak:
+      auth: http://localhost:8080/auth
