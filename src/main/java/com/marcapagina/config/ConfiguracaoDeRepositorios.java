@@ -1,6 +1,7 @@
 package com.marcapagina.config;
 
-import com.marcapagina.adaptadores.repositorios.db.RepositorioUsuarioImpl;
+import com.marcapagina.adaptadores.repositorios.db.RepositorioDeLivrosJdbc;
+import com.marcapagina.aplicacao.RepositorioDeLivros;
 import com.marcapagina.aplicacao.RepositorioUsuario;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -12,7 +13,7 @@ import javax.sql.DataSource;
 public class ConfiguracaoDeRepositorios {
 
     @Bean
-    public RepositorioUsuario repositorioUsuario(@Qualifier("dsMarcaPagina") DataSource dsMarcaPagina) {
-        return new RepositorioUsuarioImpl(dsMarcaPagina);
+    public RepositorioDeLivros repositorioUsuario(@Qualifier("dsMarcaPagina") DataSource dsMarcaPagina) {
+        return new RepositorioDeLivrosJdbc(dsMarcaPagina);
     }
 }

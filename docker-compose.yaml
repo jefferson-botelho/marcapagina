@@ -12,10 +12,11 @@ services:
   mssqlscripts:
     image: mcr.microsoft.com/mssql-tools
     volumes:
-      - './src/main/resources/sql:/sql'
+      - './src/main/resources/sql:/var/lib/sql'
+      - './src/main/resources/sql:/var/lib/fotos-capas'
     depends_on:
       - mssql
-    command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P Password!23 -d master -i './sql/schema.sql'; do sleep 5; done'
+    command: /bin/bash -c 'until /opt/mssql-tools/bin/sqlcmd -S mssql -U sa -P Password!23 -d master -i './var/lib/sql/schema.sql'; do sleep 5; done'
   keycloak:
     image: quay.io/keycloak/keycloak:legacy
     depends_on:
@@ -32,3 +33,6 @@ services:
       - DB_PASSWORD=Password!23
       - DB_ADDR=mssql
       - DB_DATABASE=Keycloak
+volumes:
+  fotos-capas:
+    external: false
