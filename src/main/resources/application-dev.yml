@@ -11,6 +11,9 @@ spring:
     password: ${DB_SENHA_MARCAPAGINA}
   security:
     oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: ${app.conf.keycloak.auth}/realms/marca-pagina/protocol/openid-connect/certs
       client:
         registration:
           keycloak:
@@ -25,7 +28,7 @@ spring:
 
 app:
   conf:
+    capas:
+      dir: ${java.io.tmpdir}/fotos
     keycloak:
       auth: http://localhost:8080/auth
-    fotos:
-      path: ${java.io.tmpdir}/capas

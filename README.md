@@ -31,7 +31,22 @@ Segue o que foi configurado para esta aplicação:
 2. Rodar direto da IDE a classe `MarcapaginaApplication`, lembrando de informar o profile para a jvm com `-Dspring.profiles.active=dev`. 
 Se estiver utilizando o IntelliJ, inclua o comando em `Add VM options` na configuração de Run/Debug.
 3. (Alternativa) `mvn spring-boot:run -Drun.profiles=dev`.
-4. Acessar http://localhost:8081/hello-world e criar um novo usuário ou autenticar com o usuário criado.
+
+#### Cadastrando um livro
+Um livro pode ser cadastrado na URL http://localhost:8081/api/cadastrar-livro utilizando o método HTTP `POST`.
+Verifique o corpo necessário para salvar o livro em [LivroDTO](src/main/java/com/marcapagina/adaptadores/controladores/dto/LivroDTO.java) e
+obtenha o token antes de submeter o cadastro do livro.
+> *Obs.:* A capa do livro deve ser enviada em base64.
+
+#### Autenticação
+
+1. Utilizando o Postman, acesse a aba Authorization.
+2. Em Grant Type selecione Authorization Code (With PKCE)
+3. Callback URL -> http://localhost:8081
+4. Auth URL -> http://localhost:8080/auth/realms/marca-pagina/protocol/openid-connect/auth
+5. Access Token URL -> http://localhost:8080/auth/realms/marca-pagina/protocol/openid-connect/token
+6. Client ID -> login-app
+7. Clique em Get New Access Token e informe o login e senha, após clique em Use Token.
 
 
 
