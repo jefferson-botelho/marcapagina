@@ -23,4 +23,9 @@ public class ServicoDeLivrosImpl implements ServicoDeLivros {
         long idLivro = repositorioDeLivros.salvarLivro(livro);
         imagem.salvarImagem(idLivro, livro.getFotoCapa());
     }
+
+    @Override
+    public void iniciarLeitura(long idLivro, String idUsuario) {
+        repositorioDeLivros.iniciarLeitura(idLivro, idUsuario);
+    }
 }

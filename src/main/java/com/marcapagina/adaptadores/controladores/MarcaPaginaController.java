@@ -20,4 +20,10 @@ public class MarcaPaginaController {
     public void cadastrarLivro(@RequestBody LivroDTO livro) {
         servico.salvarLivro(livro.paraModelo());
     }
+
+    @PostMapping("/iniciar-leitura")
+    public void iniciarLeitura(@RequestBody long idLivro, Authentication auth) {
+        String idUsuario = (String) auth.getCredentials();
+        servico.iniciarLeitura(idLivro, idUsuario);
+    }
 }

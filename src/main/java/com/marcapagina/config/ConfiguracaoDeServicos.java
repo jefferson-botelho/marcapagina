@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 public class ConfiguracaoDeServicos {
 
     @Bean
-    public ServicoDeLivros servicoDeLivros(RepositorioDeLivros repositorioDeLivros, @Value("${app.conf.foto.capas}") String diretorioCapas) {
+    public ServicoDeLivros servicoDeLivros(RepositorioDeLivros repositorioDeLivros, @Value("${app.conf.capas.dir}") String diretorioCapas) {
         return new ServicoDeLivrosImpl(repositorioDeLivros, diretorioCapas);
     }
 }

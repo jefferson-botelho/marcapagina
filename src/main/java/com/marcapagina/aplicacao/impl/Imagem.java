@@ -21,8 +21,7 @@ public class Imagem {
         File arquivo = montarArquivo(idImagem, splitBase64);
         byte[] imagemByte = DatatypeConverter.parseBase64Binary(splitBase64[1]);
 
-        try {
-            OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(arquivo));
+        try (OutputStream outputStream = new BufferedOutputStream(new FileOutputStream(arquivo))){
             outputStream.write(imagemByte);
         } catch (Exception e) {
             log.error("Erro ao salvar a imagem", e);

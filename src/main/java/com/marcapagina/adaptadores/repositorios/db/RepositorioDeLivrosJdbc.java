@@ -11,6 +11,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.sql.DataSource;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import static java.util.Objects.requireNonNull;
 
@@ -20,6 +22,12 @@ public class RepositorioDeLivrosJdbc implements RepositorioDeLivros {
 
     public RepositorioDeLivrosJdbc(DataSource ds) {
         this.namedJt = new NamedParameterJdbcTemplate(ds);
+    }
+
+    @Override
+    public void iniciarLeitura(long idLivro, String idUsuario) {
+        String insert = "INSERT INTO MARCAPAGINA.REGISTRO(id_usuario, id_livro, ultima_pagina_lida, data) VALUES (:idUsuario, :idLivro, :ultimaPaginaLida, :data)";
+        namedJt.update(insert, new ParametrosInsertRegistro(idUsuario, idLivro, 0, LocalDateTime.now()));
     }
 
     @Override
@@ -36,6 +44,15 @@ public class RepositorioDeLivrosJdbc implements RepositorioDeLivros {
             this.addValue("titulo", livro.getTitulo());
             this.addValue("autor", livro.getAutor());
             this.addValue("qtdPaginas", livro.getQtdPaginas());
+        }
+    }
+
+    public static class ParametrosInsertRegistro extends MapSqlParameterSource {
+        public ParametrosInsertRegistro(String idUsuario, long idLivro, int ultimaPaginaLida, LocalDateTime data) {
+            this.addValue("idUsuario", idUsuario);
+            this.addValue("idLivro", idLivro);
+            this.addValue("ultimaPaginaLida", ultimaPaginaLida);
+            this.addValue("data", data);
         }
     }
 }

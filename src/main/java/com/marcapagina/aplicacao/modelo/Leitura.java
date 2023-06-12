@@ -1,6 +1,5 @@
 package com.marcapagina.aplicacao.modelo;
 
-import com.marcapagina.aplicacao.comum.Utils;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NonNull;
@@ -39,6 +38,7 @@ public class Leitura {
     ) {
         this.idUsuario = idUsuario;
         this.idLivro = idLivro;
+        this.livro = livro;
         this.ultimaPaginaLida = retornarUltimoRegistroDePaginaLida(registroPaginaLida);
         this.registroPaginaLida = registroPaginaLida;
         this.percentualLido = calcularPercentualLido(this.livro.getQtdPaginas(), this.ultimaPaginaLida);
@@ -50,7 +50,7 @@ public class Leitura {
 
     private RegistroPaginaLida retornarUltimoRegistroDePaginaLida(List<RegistroPaginaLida> registro) {
         Collections.sort(registro);
-        return registro.size() > 0 ? registro.get(registro.size() - 1) : null;
+        return !registro.isEmpty() ? registro.get(registro.size() - 1) : null;
     }
 
     private BigDecimal calcularPercentualLido(int qtdPaginas, RegistroPaginaLida ultimoRegistro) {
@@ -59,9 +59,9 @@ public class Leitura {
 
     private int calcularRitmoDeLeitura(LocalDateTime dataInicioLeitura, RegistroPaginaLida ultimoRegistro) {
         int qtdDiasLendo = (int) dataInicioLeitura.until(ultimoRegistro.getDataRegistro(), ChronoUnit.DAYS);
-        int ultimaPaginaLida = ultimoRegistro.getUltimaPaginaLida();
+        int numeroUltimaPaginaLida = ultimoRegistro.getUltimaPaginaLida();
 
-        return ultimaPaginaLida / qtdDiasLendo;
+        return numeroUltimaPaginaLida / qtdDiasLendo;
     }
 
     private LocalDate calcularPrevisaoDeConclusao(int ritmoLeitura, int qtdPaginas, RegistroPaginaLida ultimoRegistro) {
