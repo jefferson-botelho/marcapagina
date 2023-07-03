@@ -1,5 +1,6 @@
 package com.marcapagina.config;
 
+import com.marcapagina.adaptadores.keycloak.KeycloakOauth2UserService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -48,6 +49,11 @@ public class ConfiguracaoDeSeguranca {
                 .headers().frameOptions().disable();
 
         return http.build();
+    }
+
+    @Bean
+    public KeycloakOauth2UserService keycloakOidcUserService() {
+        return new KeycloakOauth2UserService();
     }
 
     @Bean

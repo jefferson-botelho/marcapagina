@@ -1,13 +1,13 @@
 package com.marcapagina.adaptadores.controladores;
 
 import com.marcapagina.adaptadores.controladores.dto.LivroDTO;
+import com.marcapagina.adaptadores.rest.jwt.UsuarioAutenticado;
+import com.marcapagina.aplicacao.ServicoDeAutenticacao;
 import com.marcapagina.aplicacao.ServicoDeLivros;
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
-
-import java.security.Principal;
 
 @RestController
 @RequestMapping("/api")
@@ -15,6 +15,7 @@ import java.security.Principal;
 public class MarcaPaginaController {
 
     private final ServicoDeLivros servico;
+    private final ServicoDeAutenticacao servicoDeAutenticacao;
 
     @PostMapping("/cadastrar-livro")
     public void cadastrarLivro(@RequestBody LivroDTO livro) {
@@ -22,8 +23,8 @@ public class MarcaPaginaController {
     }
 
     @PostMapping("/iniciar-leitura")
-    public void iniciarLeitura(@RequestBody long idLivro, Authentication auth) {
-        String idUsuario = (String) auth.getCredentials();
-        servico.iniciarLeitura(idLivro, idUsuario);
+    public void iniciarLeitura(@RequestBody long idLivro, @AuthenticationPrincipal Jwt jwt) {
+        UsuarioAutenticado usuario = servicoDeAutenticacao.usuarioAutenticado();
+        servico.iniciarLeitura(idLivro, usuario.getId());
     }
 }
