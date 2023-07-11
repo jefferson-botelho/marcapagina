@@ -20,10 +20,14 @@ e também configurar o Keycloak.
 2. Acesse o painel do Keycloak em http://localhost:8080/auth/admin. 
 Login e senha são `admin`, de acordo com o definido no [docker-compose.yml](docker-compose.yaml).
 3. Deve-se criar o realm e client-id no painel do Keycloak. 
-Para criação de realm e client-id, siga as instruções [aqui](https://www.baeldung.com/spring-boot-keycloak). 
-Segue o que foi configurado para esta aplicação:
-   - client-id: login-app
-   - realm: marca-pagina
+   - Acesse http://localhost:8080/auth/admin login e senha é admin.
+   - No combo à esquerda clique em **Create Realm**.
+   
+   ![criar-realm.png](criar-realm.png)
+   - Digite o nome do realm (no nosso caso coloquei `marca-pagina`) e clique em **Create**.
+   - No menu lateral clique em **Clients**, depois, **Create Client**. Digite o Client ID (no nosso caso será `login-app`) clique em **Next** e **Save**.
+   - Em **Clients Details**, adicione a URL http://localhost:8081/* em **Valid redirect URIs** para permitir o redirect para a api do marcapagina e clique em **Save**.
+   - Você pode permitir a criação de um novo usuário no menu lateral em **Realm Settings**, aba **Login**, ative o **User registration**. 
 4. A configuração é mantida se o container for parado e iniciado novamente.
 
 #### Rodando aplicação
